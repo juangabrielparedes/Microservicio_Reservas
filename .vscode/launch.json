@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ReservacionApplication",
+            "request": "launch",
+            "mainClass": "com.example.reservacion.ReservacionApplication",
+            "projectName": "reservacion"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-MicroservicioReservacionApplication<microservicio_reservacion>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
