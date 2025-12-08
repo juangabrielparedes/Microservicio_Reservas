@@ -1,5 +1,6 @@
 package com.example.reservacion.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.reservacion.dto.ReservaRequest;
@@ -41,5 +42,10 @@ public class ReservaController {
     @DeleteMapping("/{id}")
     public void eliminar(@PathVariable String id) {
         reservaService.eliminarReserva(id);
+    }
+
+    @GetMapping("/health")
+    public ResponseEntity<String> health(){
+        return ResponseEntity.ok("Booking service running");
     }
 }
