@@ -8,23 +8,32 @@ import com.example.reservacion.model.Reserva;
 import com.example.reservacion.model.Servicio;
 import com.example.reservacion.repository.ReservaRepository;
 import com.example.reservacion.repository.ServicioRepository;
+import com.example.reservacion.client.UserClient;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Service
 public class ReservaServiceImpl implements ReservaService {
 
     private final ReservaRepository reservaRepo;
     private final ServicioRepository servicioRepo;
+    private final UserClient userClient;
 
-    public ReservaServiceImpl(ReservaRepository reservaRepo, ServicioRepository servicioRepo) {
+    public ReservaServiceImpl(ReservaRepository reservaRepo, ServicioRepository servicioRepo, UserClient userClient) {
         this.reservaRepo = reservaRepo;
         this.servicioRepo = servicioRepo;
+        this.userClient = userClient;
     }
 
     @Override
     public ReservaResponse crearReserva(ReservaRequest reservaRequest) {
+
+        boolean existe = userClient.existeUsuario(reservaRequest.getClienteId());
+        if (!existe) {
+            throw new RuntimeException("El usuario no existe en el microservicio de autenticación");
+        }
         Servicio servicio = servicioRepo.findById(reservaRequest.getServicioId())
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
 
@@ -101,4 +110,19 @@ public class ReservaServiceImpl implements ReservaService {
         res.setHoraFin(r.getHoraFin());
         return res;
     }
+
+    @Override
+    public List<ReservaResponse> listarReservasPorCliente(Long id) {
+
+        List<Reserva> reservas = reservaRepo.findByClienteId(id);
+
+        if (reservas.isEmpty()) {
+            throw new RuntimeException("El cliente no tiene reservas registradas");
+        }
+
+        return reservas.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
 }

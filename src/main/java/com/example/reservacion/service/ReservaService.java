@@ -11,4 +11,5 @@ public interface ReservaService {
     ReservaResponse obtenerReserva(String id);
     ReservaResponse actualizarReserva(String id, ReservaRequest request);
     void eliminarReserva(String id);
+    List<ReservaResponse> listarReservasPorCliente(Long id);
 }
