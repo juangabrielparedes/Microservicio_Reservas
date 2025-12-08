@@ -48,4 +48,10 @@ public class ReservaController {
     public ResponseEntity<String> health(){
         return ResponseEntity.ok("Booking service running");
     }
+
+    @GetMapping("/cliente/{id}")
+    public List<ReservaResponse> listarPorCliente(@PathVariable Long id) {
+        return reservaService.listarReservasPorCliente(id);
+    }
+
 }
