@@ -1,5 +1,7 @@
 package com.example.reservacion.dto;
 
+import java.time.LocalTime;
+
 import lombok.Data;
 
 @Data
@@ -12,4 +14,7 @@ public class ReservaResponse {
     private String estado;
     private String servicioNombre;
     private Double costoEstimado;
+
+    private LocalTime horaInicio;
+    private LocalTime horaFin;
 }
