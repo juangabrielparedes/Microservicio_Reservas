@@ -74,6 +74,9 @@ public class ReservaServiceImpl implements ReservaService {
         reserva.setFechaProgramada(req.getFechaProgramada());
         reserva.setServicio(servicio);
 
+        reserva.setHoraInicio(req.getHoraInicio());
+        reserva.setHoraFin(req.getHoraFin());
+
         reservaRepo.save(reserva);
         return mapToResponse(reserva);
     }
@@ -93,6 +96,9 @@ public class ReservaServiceImpl implements ReservaService {
         res.setModalidad(r.getModalidad());
         res.setServicioNombre(r.getServicio().getNombre());
         res.setCostoEstimado(r.getCostoEstimado());
+
+        res.setHoraInicio(r.getHoraInicio());
+        res.setHoraFin(r.getHoraFin());
         return res;
     }
 }
